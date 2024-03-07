@@ -11,7 +11,10 @@ const { Pool } = pg;
 const connectionString = process.env.DB_URL;
  
 const db = new Pool({
-  connectionString: connectionString
+  connectionString: connectionString,
+  ssl: {
+    rejectUnauthorized: false,
+  }
 });
 db.connect();
 
