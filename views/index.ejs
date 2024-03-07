@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="nav"><a href="/">Book Reviews</a></div>
+    <div class="review-container">
+        <div class="buttons">
+            <form action="/add" method="POST">
+                <input type="submit" value="Add review">
+            </form>
+            <form action="/sort" method="POST">
+                <select id="sort" name="sort" required>
+                    <option value="" disabled selected>Sort by</option>
+                    <option value="desc">Highest to lowest rating</option>
+                    <option value="asc">Lowest to highest rating</option>
+                    <option value="recent">Newest to Oldest books</option>
+                    <option value="oldest">Oldest to newest books</option>
+                </select>
+                <input type="submit">
+            </form>
+        </div>
+
+        <%reviews.forEach((review) => { %>
+            <div class="review">
+                <div class="top">
+                    <img src="https://covers.openlibrary.org/b/isbn/<%=review.isbn%>-M.jpg" alt="cover for book with isbn <%=review.isbn%>">
+                    <div class="book-details">
+                        <h2><%= review.title%></h2>
+                        <p>ISBN: <%= review.isbn%></p>
+                        <p>Publication date: <%= review.pub.toJSON().slice(0, 10)%></p>
+                        <p>Rating: <%= review.rating%>/10</p>
+                        <p><%= review.review%></p>
+                        <div class="alter">
+                            <form action="/edit" method="POST">
+                                <input type="hidden" name="id" value="<%=review.id%>">
+                                <input type="submit" value="Edit">
+                            </form>
+                            <div class="delete">
+                                <button class="delete-btn">Delete</button>
+                                <div class="delete-hidden">
+                                    <p>Are you sure?</p>
+                                    <form action="/delete" method="POST">
+                                        <input type="hidden" name="id" value="<%=review.id%>">
+                                        <input type="password" name="password" placeholder="Enter Password">
+                                        <input type="submit" value="Yes">
+                                    </form>
+                                    <button class="no">No</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% });%>
+    </div>
+    <div class="footer"></div>
+
+    <script>
+        let deleteBtns = document.querySelectorAll(".delete-btn");
+        let noBtns = document.querySelectorAll(".no");
+        let hiddens = document.querySelectorAll(".delete-hidden");
+        for (let i = 0; i < deleteBtns.length; i++) {
+            deleteBtns[i].addEventListener("click", ()=> {
+
+                deleteBtns[i].style.display = "none";
+                
+                hiddens[i].animate([{
+                    opacity: 0
+                    }, {
+                    opacity: 1
+                    }], {
+                    duration: 1300
+                });
+                hiddens[i].style.display = "block";
+            });
+            noBtns[i].addEventListener("click", ()=> {
+                hiddens[i].style.display = "none";
+                deleteBtns[i].animate([{
+                    opacity: 0
+                    }, {
+                    opacity: 1
+                    }], {
+                    duration: 1300
+                });
+                deleteBtns[i].style.display = "inline";
+            });
+        }
+    </script>
+
+</body>
+</html>
