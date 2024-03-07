@@ -5,7 +5,8 @@ import axios from "axios";
 //https://www.vinzius.com/post/free-and-paid-api-isbn/ get books by isbn
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+
 
 const db = new pg.Client({
     user: "postgres",
