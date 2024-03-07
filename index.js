@@ -6,17 +6,15 @@ import axios from "axios";
 
 const app = express();
 const port = process.env.PORT || 3000;
+const { Pool } = pg;
 
-
-const db = new pg.Client({
-    user: "postgres",
-    host: "localhost",
-    database: "book",
-    password: "1234",
-    port: 5432
+const connectionString = process.env.DB_URL;
+ 
+const db = new Pool({
+  connectionString: connectionString
 });
-
 db.connect();
+
 
 let reviews = [];
 
