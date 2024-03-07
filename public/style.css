@@ -26,6 +26,7 @@ body {
     gap: 5em;
     padding: 1em;
     margin: 1em;
+    min-width: 80%;
 }
 
 .update-container {
