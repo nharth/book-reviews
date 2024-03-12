@@ -1,2 +1,3 @@
-Live: https://bookreviewsnharth.onrender.com/\
+Live: https://bookreviewsnharth.onrender.com/
+
 EJS, CSS, JavaScript, PostgreSQL
